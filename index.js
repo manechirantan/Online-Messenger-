@@ -10,6 +10,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.get("/favicon.ico", (req, res) => res.status(204));
 import mongoose from "mongoose";
+import methodoverride from "method-override";
+app.use(methodoverride("_method"));
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/whatsapp");
 }
@@ -48,12 +50,33 @@ app.post("/", async (req, res) => {
   res.redirect("/");
 });
 
-// app.get("/:id",async (req, res) => {
-//   let { id } = req.params;
-//   let user= await Chat.findOne({_id:id})
-//   console.log(user)
-//   res.render('chat.ejs',{user})
-// });
+app.get("/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  let user = await Chat.findOne({ _id: id });
+  res.render("chat.ejs", { user });
+});
+
+app.put("/:id", async (req, res) => {
+  let { id } = req.params;
+  let { msg: msg } = req.body;
+  let date = new Date();
+  let chat = await Chat.findByIdAndUpdate(
+    id,
+    { msg: msg, updated: date },
+    { runValidators: true },
+    { new: true },
+  );
+  chat.save().then((res) => {
+    console.log(res);
+  });
+  res.redirect("/");
+});
+
+app.delete("/:id", async (req, res) => {
+  let { id } = req.params;
+  await Chat.findByIdAndDelete(id);
+  res.redirect('/')
+});
 
 app.listen(port, () => {
   console.log("connected to server easily");

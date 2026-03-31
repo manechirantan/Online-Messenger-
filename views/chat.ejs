@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>chat in detail</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-    <h1>Your chats</h1>
-<div class="chat">
-    <p>from:<%= user.from %>,</p>
-    <div class="msg">
-        <p>message:<%= user.msg %></p>
-    </div>
-    <p>received by:<%= user.to %></p>
-</body>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <h1>edit your chat</h1>
+    <p>this is msg from <%= user.from %> to <%= user.to %></p>
+    <form action="http://localhost:3000/<%= user._id %>?_method=PUT" method="post">
+        <textarea name="msg" class="msg" rows="6">
+        <%= user.msg %>
+        </textarea>
+        <button>edit</button>
+    </form>
+  </body>
 </html>

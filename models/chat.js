@@ -17,6 +17,9 @@ let chatSchema = new schema({
     type: String,
     required: true,
   },
+  updated: {
+    type: String,
+  },
 });
 
 let Chat = mongoose.model("Chat", chatSchema);

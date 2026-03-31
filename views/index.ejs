@@ -16,11 +16,20 @@
     <p>from:<%= chat.from %>,</p>
     <div class="msg">
         <p>message:<%= chat.msg %></p>
+    <a href="http://localhost:3000/<%= chat._id %>/edit">edit</a>
     </div>
     <p>received by:<%= chat.to %></p>
+    <% if(chat.updated){ %>
+        <p>updation:<%= chat.updated %></p>
+     <% } else{ %>
+      <%   console.log("") %>
+        <% } %>
+    <form action="http://localhost:3000/<%= chat._id %>?_method=DELETE" method="post">
+        <button>DELETE</button>
+    </form> 
     <hr>
 </div>
-<!-- <a href="http://localhost:3000/<%= chat._id %>">view in ease</a> -->
+
 <br>
 <br>    
  <% } %>
